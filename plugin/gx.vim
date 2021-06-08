@@ -2,6 +2,7 @@ if exists('g:loaded_sanegx') | finish | endif
 let g:loaded_sanegx = 1
 
 function! GXBrowse(url)
+  let redir = '>&/dev/null'
   if exists('g:netrw_browsex_viewer')
    let viewer = g:netrw_browsex_viewer
   elseif has('unix') && executable('xdg-open')
@@ -10,11 +11,12 @@ function! GXBrowse(url)
    let viewer = 'open'
   elseif has('win64') || has('win32')
    let viewer = 'start'
+   redir = '>null'
   else
    return
   endif
 
-  execute 'silent! !' . viewer . ' ' . shellescape(a:url, 1)
+  execute 'silent! !' . viewer . ' ' . shellescape(a:url, 1) . redir
 endfunction
 
 nnoremap <silent> gx :call GXBrowse(expand('<cWORD>'))<cr>
