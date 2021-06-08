@@ -17,6 +17,7 @@ function! GXBrowse(url)
   endif
 
   execute 'silent! !' . viewer . ' ' . shellescape(a:url, 1) . redir
+  redraw!
 endfunction
 
 nnoremap <silent> gx :call GXBrowse(expand('<cWORD>'))<cr>
